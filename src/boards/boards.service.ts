@@ -13,7 +13,7 @@ export class BoardsService {
 
     createBoard(title: string, description: string) {
         const board: Board = {
-            id: uuid,
+            id: uuid(),
             title: title,
             description: description,
             status: BoardStatus.PUBLIC,
