@@ -8,6 +8,11 @@ import { Board } from './board.entity';
 
 @Injectable()
 export class BoardsService {
+    constructor(
+        @InjectRepository(BoardRepository)
+        private boardRepository: BoardRepository,
+    ) {}
+
     //private을 사용하지 않으면
     //다른 컴포넌트에서 이 board라는 배열값을 수정할수 있다.
     private boards: Board[] = [];
