@@ -1,15 +1,14 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { Board } from '../boards/board.entity';
+import { User } from 'src/auth/user.entity';
 
 export const typeORMConfig: TypeOrmModuleOptions = {
     type: 'postgres',
-    host: process.env.PSQL_HOST,
-    port: parseInt(process.env.PSQL_PORT),
-    username: process.env.PSQL_USER,
-    password: process.env.PSQL_PW,
-    database: process.env.PSQL_DATABASE,
-    entities: [__dirname + '../**/*.entity.{js,ts}'],
+    host: 'localhost',
+    port: 5433,
+    username: 'postgres',
+    password: '1234',
+    database: 'board-app',
+    entities: [Board, User],
     synchronize: true,
 };

@@ -7,19 +7,22 @@ export class TypeOrmExModule {
     public static forCustomRepository<T extends new (...args: any[]) => any>(
         repositories: T[],
     ): DynamicModule {
-        const providers: Provider[] = [];
-
-        for (const repository of repositories) {
+        const providers: Provider[] = repositories.map((repository) => {
             const entity = Reflect.getMetadata(
                 TYPEORM_EX_CUSTOM_REPOSITORY,
                 repository,
             );
 
             if (!entity) {
-                continue;
+                console.error(`Metadata for ${repository.name} not found`);
+                throw new Error(
+                    `${repository.name} is not a custom repository. Did you forget to decorate it with @CustomRepository()?`,
+                );
             }
 
-            providers.push({
+            console.log(`Found metadata for ${repository.name}:`, entity);
+
+            return {
                 inject: [getDataSourceToken()],
                 provide: repository,
                 useFactory: (dataSource: DataSource): typeof repository => {
@@ -31,8 +34,8 @@ export class TypeOrmExModule {
                         baseRepository.queryRunner,
                     );
                 },
-            });
-        }
+            };
+        });
 
         return {
             exports: providers,
