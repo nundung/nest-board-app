@@ -7,15 +7,19 @@ import { BoardsService } from './boards/boards.service';
 import { TypeOrmExModule } from './configs/typeorm-ex.module';
 import { BoardRepository } from './boards/board.repository';
 import { AuthModule } from './auth/auth.module';
+import { UserRepository } from './auth/user.repository';
+import { AuthController } from './auth/auth.controller';
+import { AuthService } from './auth/auth.service';
 
 @Module({
     imports: [
         TypeOrmModule.forRoot(typeORMConfig),
-        BoardsModule,
         TypeOrmExModule.forCustomRepository([BoardRepository]),
+        TypeOrmExModule.forCustomRepository([UserRepository]),
+        BoardsModule,
         AuthModule,
     ],
-    controllers: [BoardsController],
-    providers: [BoardsService],
+    controllers: [BoardsController, AuthController],
+    providers: [BoardsService, AuthService],
 })
 export class AppModule {}
