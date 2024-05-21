@@ -26,7 +26,7 @@ export class BoardsController {
     constructor(private boardsService: BoardsService) {}
 
     @Get()
-    getAllBoard(): Promise<Board[]> {
+    getAllBoards(): Promise<Board[]> {
         return this.boardsService.getAllBoards();
     }
 
