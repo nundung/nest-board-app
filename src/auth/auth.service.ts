@@ -26,13 +26,12 @@ export class AuthService {
             where: { username: username },
         });
 
-        if (user && (await bcrypt.compare(password, user.password))) {
-            const payload = { username };
-            const accessToken = await this.jwtService.sign(payload);
-
-            return { accessToken };
-        } else {
+        if (!user || !(await bcrypt.compare(password, user.password))) {
             throw new UnauthorizedException('login failed');
         }
+        const payload = { username };
+        const accessToken = await this.jwtService.sign(payload);
+
+        return { accessToken };
     }
 }
