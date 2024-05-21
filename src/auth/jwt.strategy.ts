@@ -12,7 +12,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         private userRepository: UserRepository,
     ) {
         super({
-            secretOrKey: 'nundung1234',
+            secretOrKey: 'nundungsugar',
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         });
     }
@@ -21,9 +21,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         const user: User = await this.userRepository.findOne({
             where: { username: username },
         });
-
+        console.log(user);
         if (!user) {
             throw new UnauthorizedException();
         }
+        return user;
     }
 }
