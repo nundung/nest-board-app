@@ -10,9 +10,16 @@ import { AuthModule } from './auth/auth.module';
 import { UserRepository } from './auth/user.repository';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
     imports: [
+        PassportModule.register({ defaultStrategy: 'jwt' }),
+        JwtModule.register({
+            secret: 'nundungsugar',
+            signOptions: { expiresIn: 3600 },
+        }),
         TypeOrmModule.forRoot(typeORMConfig),
         TypeOrmExModule.forCustomRepository([BoardRepository]),
         TypeOrmExModule.forCustomRepository([UserRepository]),
