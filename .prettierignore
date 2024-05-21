@@ -3,4 +3,7 @@ node_modules/
 *.json
 
 .*
- 
+
+*.yml
+
+*.yaml
